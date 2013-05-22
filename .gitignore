@@ -1,0 +1,9 @@
+/firmware/libs/CMSIS/CMSIS/Documentation
+
+/firmware/libs/CMSIS/CMSIS/DSP_Lib/Source/GCC/*.uvproj
+
+/firmware/libs/lpc_core/lpc_board/boards_11xx/*.ewp
+
+*.uvproj
+
+*.ewp

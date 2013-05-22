@@ -1,0 +1,1 @@
+ffmpeg -i test.mp4 -f rawvideo -pix_fmt 0rgb -s 160x120 -vcodec rawvideo -r 25 out.raw
