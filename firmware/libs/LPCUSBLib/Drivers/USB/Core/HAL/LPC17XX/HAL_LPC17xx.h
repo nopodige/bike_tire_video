@@ -57,7 +57,7 @@
 #endif
 #endif
 #if defined(__GNUC__)
-#define __BSS(x)   __attribute__ ((section("usbram")))
+#define __BSS(x)   __attribute__ ((section(".usbram")))
 #endif
 
 #define USB_REG(CoreID)         LPC_USB

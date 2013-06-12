@@ -38,26 +38,11 @@
  * Private types/enumerations/variables
  ****************************************************************************/
 
-/** LPCUSBlib Mass Storage Class driver interface configuration and state information. This structure is
- *  passed to all Mass Storage Class driver functions, so that multiple instances of the same class
- *  within a device can be differentiated from one another.
- */
-static USB_ClassInfo_MS_Host_t FlashDisk_MS_Interface = {
-	.Config = {
-		.DataINPipeNumber       = 1,
-		.DataINPipeDoubleBank   = false,
-
-		.DataOUTPipeNumber      = 2,
-		.DataOUTPipeDoubleBank  = false,
-		.PortNumber = 0,
-	},
-};
-
+extern USB_ClassInfo_MS_Host_t FlashDisk_MS_Interface;
 static SCSI_Capacity_t DiskCapacity;
-static uint8_t buffer[8 * 1024];
 
-STATIC FATFS fatFS;	/* File system object */
-STATIC FIL fileObj;	/* File object */
+
+
 
 /*****************************************************************************
  * Public types/enumerations/variables
@@ -67,139 +52,11 @@ STATIC FIL fileObj;	/* File object */
  * Private functions
  ****************************************************************************/
 
-/* Function to spin forever when there is an error */
-static void die(FRESULT rc)
-{
-#if 0
-	DEBUGOUT("*******DIE %d*******\r\n", rc);
-	while (1) {}/* Spin for ever */
-#endif
-}
-
-/** Configures the board hardware and chip peripherals for the demo's functionality. */
-static void SetupHardware(void)
-{
-	Board_Init();
-	USB_Init(FlashDisk_MS_Interface.Config.PortNumber, USB_MODE_Host);
-	/* Hardware Initialization */
-	Board_Debug_Init();
-
-	/* Create a stdio stream for the serial port for stdin and stdout */
-	Serial_CreateStream(NULL);
-}
-
-/* Function to do the read/write to USB Disk */
-static void USB_ReadWriteFile(void)
-{
-	FRESULT rc;		/* Result code */
-	int i;
-	UINT bw, br;
-	uint8_t *ptr;
-	char debugBuf[64];
-	DIR dir;		/* Directory object */
-	FILINFO fno;	/* File information object */
-
-	f_mount(0, &fatFS);		/* Register volume work area (never fails) */
-
-	rc = f_open(&fileObj, "MESSAGE.TXT", FA_READ);
-	if (rc) {
-		DEBUGOUT("Unable to open MESSAGE.TXT from USB Disk\r\n");
-		die(rc);
-	}
-	else {
-		DEBUGOUT("Opened file MESSAGE.TXT from USB Disk. Printing contents...\r\n\r\n");
-		for (;; ) {
-			/* Read a chunk of file */
-			rc = f_read(&fileObj, buffer, sizeof buffer, &br);
-			if (rc || !br) {
-				break;					/* Error or end of file */
-			}
-			ptr = (uint8_t *) buffer;
-			for (i = 0; i < br; i++) {	/* Type the data */
-				DEBUGOUT("%c", ptr[i]);
-			}
-		}
-		if (rc) {
-			die(rc);
-		}
-
-		DEBUGOUT("\r\n\r\nClose the file.\r\n");
-		rc = f_close(&fileObj);
-		if (rc) {
-			die(rc);
-		}
-	}
-
-	DEBUGOUT("\r\nCreate a new file (hello.txt).\r\n");
-	rc = f_open(&fileObj, "HELLO.TXT", FA_WRITE | FA_CREATE_ALWAYS);
-	if (rc) {
-		die(rc);
-	}
-	else {
-
-		DEBUGOUT("\r\nWrite a text data. (Hello world!)\r\n");
-
-		rc = f_write(&fileObj, "Hello world!\r\n", 14, &bw);
-		if (rc) {
-			die(rc);
-		}
-		else {
-			sprintf(debugBuf, "%u bytes written.\r\n", bw);
-			DEBUGOUT(debugBuf);
-		}
-		DEBUGOUT("\r\nClose the file.\r\n");
-		rc = f_close(&fileObj);
-		if (rc) {
-			die(rc);
-		}
-	}
-	DEBUGOUT("\r\nOpen root directory.\r\n");
-	rc = f_opendir(&dir, "");
-	if (rc) {
-		die(rc);
-	}
-	else {
-		DEBUGOUT("\r\nDirectory listing...\r\n");
-		for (;; ) {
-			/* Read a directory item */
-			rc = f_readdir(&dir, &fno);
-			if (rc || !fno.fname[0]) {
-				break;					/* Error or end of dir */
-			}
-			if (fno.fattrib & AM_DIR) {
-				sprintf(debugBuf, "   <dir>  %s\r\n", fno.fname);
-			}
-			else {
-				sprintf(debugBuf, "   %8lu  %s\r\n", fno.fsize, fno.fname);
-			}
-			DEBUGOUT(debugBuf);
-		}
-		if (rc) {
-			die(rc);
-		}
-	}
-	DEBUGOUT("\r\nTest completed.\r\n");
-	USB_Host_SetDeviceConfiguration(FlashDisk_MS_Interface.Config.PortNumber, 0);
-}
 
 /*****************************************************************************
  * Public functions
  ****************************************************************************/
 
-/** Main program entry point. This routine configures the hardware required by the application, then
- *  calls the filesystem function to read files from USB Disk
- */
-int main(void)
-{
-	SetupHardware();
-
-	DEBUGOUT("Mass Storage Host Demo running.\r\n");
-
-	USB_ReadWriteFile();
-
-	DEBUGOUT("Example completed.\r\n");
-	while (1) {}
-}
 
 /** Event handler for the USB_DeviceAttached event. This indicates that a device has been attached to the host, and
  *  starts the library USB task to begin the enumeration and USB management process.

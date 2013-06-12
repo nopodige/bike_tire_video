@@ -7,3 +7,10 @@
 *.uvproj
 
 *.ewp
+
+*.d
+
+*.o
+*.lst
+*.map
+*.mk

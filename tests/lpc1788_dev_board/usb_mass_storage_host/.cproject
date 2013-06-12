@@ -17,7 +17,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.cross.arm.gnu.buildArtefactType.application" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.cross.arm.gnu.buildArtefactType.application" description="" id="org.eclipse.cdt.cross.arm.gnu.windows.elf.release.1033137889" name="Release" parent="org.eclipse.cdt.cross.arm.gnu.windows.elf.release" postbuildStep="arm-none-eabi-size  --format=berkeley ${ProjName}.elf &amp; arm-none-eabi-objdump -S ${ProjName}.elf &gt; &quot;${ProjName}.lst&quot; &amp; arm-none-eabi-objcopy -O ihex ${ProjName}.elf  &quot;${ProjName}.hex&quot;">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.cross.arm.gnu.buildArtefactType.application" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.cross.arm.gnu.buildArtefactType.application" description="" id="org.eclipse.cdt.cross.arm.gnu.windows.elf.release.1033137889" name="Release" parent="org.eclipse.cdt.cross.arm.gnu.windows.elf.release" postbuildStep="arm-none-eabi-size  --format=berkeley ${ProjName}.elf &amp; arm-none-eabi-objdump -D ${ProjName}.elf &gt; &quot;${ProjName}.lst&quot; &amp; arm-none-eabi-objcopy -O ihex ${ProjName}.elf  &quot;${ProjName}.hex&quot;">
 					<folderInfo id="org.eclipse.cdt.cross.arm.gnu.windows.elf.release.1033137889." name="/" resourcePath="">
 						<toolChain id="org.eclipse.cdt.cross.arm.gnu.windows.elf.toolchain.release.1549106313" name="ARM Windows GCC (GNUARM, WinARM)" superClass="org.eclipse.cdt.cross.arm.gnu.windows.elf.toolchain.release">
 							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.level.951041276" name="Debug level" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.level" value="org.eclipse.cdt.cross.arm.gnu.base.option.debugging.level.none" valueType="enumerated"/>
@@ -259,8 +259,8 @@
 							<tool id="org.eclipse.cdt.cross.arm.gnu.windows.elf.printsize.release.148461382" name="ARM Windows GNU Print Size" superClass="org.eclipse.cdt.cross.arm.gnu.windows.elf.printsize.release.2014009262"/>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="org.eclipse.cdt.cross.arm.gnu.windows.elf.release.1033137889.1131833185" name="chip.h" rcbsApplicability="disable" resourcePath="src/lpc_core/lpc_chip/chip_17xx_40xx/chip.h" toolsToInvoke=""/>
 					<fileInfo id="org.eclipse.cdt.cross.arm.gnu.windows.elf.release.1033137889.180633272" name="gpdma_17xx_40xx.h" rcbsApplicability="disable" resourcePath="src/lpc_core/lpc_chip/chip_17xx_40xx/gpdma_17xx_40xx.h" toolsToInvoke=""/>
+					<fileInfo id="org.eclipse.cdt.cross.arm.gnu.windows.elf.release.1033137889.1131833185" name="chip.h" rcbsApplicability="disable" resourcePath="src/lpc_core/lpc_chip/chip_17xx_40xx/chip.h" toolsToInvoke=""/>
 					<fileInfo id="org.eclipse.cdt.cross.arm.gnu.windows.elf.release.1033137889.845350758" name="sysctl_17xx_40xx.h" rcbsApplicability="disable" resourcePath="src/lpc_core/lpc_chip/chip_17xx_40xx/sysctl_17xx_40xx.h" toolsToInvoke=""/>
 					<fileInfo id="org.eclipse.cdt.cross.arm.gnu.windows.elf.release.1033137889.114680477" name="chip_lpc177x_8x.h" rcbsApplicability="disable" resourcePath="src/lpc_core/lpc_chip/chip_17xx_40xx/chip_lpc177x_8x.h" toolsToInvoke=""/>
 					<sourceEntries>

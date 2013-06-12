@@ -1,0 +1,14 @@
+
+GPIO DMA Example Project
+
+This project demonstrates the functionality of having the
+DMA perform a memory to GPIO (peripheral) transfer 
+independent of the CPU.
+
+When started, the CPU will prepare an area of memory with
+some known contents. A DMA request channel is tied together 
+with TIMER0's output to perform a DMA transfer to the LEDs
+(P2.6 - P2.2) every second while the CPU is toggling the 
+LED P1.28.
+
+If INT0 (P2.10) is pressed, the uC will go into "Sleep" mode.
